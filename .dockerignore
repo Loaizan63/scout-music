@@ -1,32 +1,41 @@
-# Dependencias
-node_modules
-.npm
-.yarn
+# ── Dependencias y código fuente ──────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Build y Cache (Los culpables del peso)
-.next
-out
-.cache
-*.sst
-*.tsbuildinfo
+# ── Build output (se regenera dentro del contenedor) ──────────────────────────
+.next/
+out/
 
-# Logs
-*-debug.log*
-*-error.log*
+# ── Caché pesada de Turbopack / webpack ───────────────────────────────────────
+# ¡Este era el culpable de los 160 MB+ de contexto!
+.next/cache/
+.sst/
+**/.turbo/
 
-# Git y Configuración local
-.git
-.gitignore
-.vscode
-.idea
-.DS_Store
-
-# Secretos
+# ── Secretos — NUNCA deben entrar a la imagen ─────────────────────────────────
 .env
 .env.local
-.env.production
 .env*.local
+.env.production
+.env.staging
 
-# Documentación (Docker no la necesita para correr la app)
+# ── Git y herramientas de desarrollo ──────────────────────────────────────────
+.git/
+.gitignore
+.gitattributes
+.vscode/
+.idea/
+*.suo
+*.sw?
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Documentación / CI (Docker no la necesita) ───────────────────────────────
 README.md
 *.md
+.github/
+php/

@@ -1,3 +1,16 @@
-node_modules/ 
-.next/ 
-.env 
+node_modules/
+.next/
+.env
+.env.local
+.env*.local
+
+# Caché de Turbopack (puede llegar a cientos de MB)
+.sst/
+**/.turbo/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
