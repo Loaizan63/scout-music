@@ -71,20 +71,15 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [currentSong?.id]);
 
+  // Effect 1: Only fires when the SONG changes — sets src, registers listeners
   useEffect(() => {
     if (!audioRef.current || !currentSong?.audioUrl) return;
 
     const audio = audioRef.current;
     const resolvedSrc = resolveMediaUrl(currentSong.audioUrl);
-    
-    // Only update src if it changed
-    if (resolvedSrc && audio.src !== resolvedSrc) {
+    if (resolvedSrc) {
       audio.src = resolvedSrc;
       audio.load();
-    }
-    
-    if (isPlaying) {
-      audio.play().catch(e => console.error("Playback failed", e));
     }
 
     const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
@@ -100,12 +95,14 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [currentSong, isPlaying]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSong?.id]); // ← ONLY song ID, never isPlaying
 
+  // Effect 2: Only fires when isPlaying toggles — plays or pauses
   useEffect(() => {
     if (!audioRef.current) return;
     if (isPlaying) {
-      audioRef.current.play().catch(e => console.error("Playback error", e));
+      audioRef.current.play().catch(e => console.error('Playback error', e));
     } else {
       audioRef.current.pause();
     }
