@@ -1,0 +1,5 @@
+# Allow access to audio files
+<FilesMatch "\.(mp3|wav|ogg|m4a)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

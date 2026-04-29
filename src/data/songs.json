@@ -1,0 +1,73 @@
+[
+  {
+    "id": 1,
+    "title": "Amanecer",
+    "artist": "Himno Scout",
+    "category": "Rovers",
+    "duration": 240,
+    "coverUrl": "1",
+    "audioUrl": "audio/amanecer-scout.mp3",
+    "description": "Un hermoso himno scout que celebra el inicio del día y la esperanza de nuevas aventuras"
+  },
+  {
+    "id": 2,
+    "title": "Rema Tu Propia Canoa",
+    "artist": "Clan Rover Rock",
+    "category": "Rovers",
+    "duration": 180,
+    "coverUrl": "2",
+    "audioUrl": "audio/rema-tu-propia-canoa.mp3",
+    "description": "La canción “Rema tu propia canoa” transmite un mensaje de superación personal, constancia y servicio, invitando a tomar las riendas de la vida con determinación y espíritu scout. Es una canción de Clan Rover Rock, lanzada en 2015 como parte de su primer disco: “Rockerismo hacia el éxito”."
+  },
+  {
+    "id": 3,
+    "title": "Muchos Años Más",
+    "artist": "Canción Scout",
+    "category": "Rovers",
+    "duration": 210,
+    "coverUrl": "3",
+    "audioUrl": "audio/muchos-a%os-mas.mp3",
+    "description": "“Muchos Años Más” es una canción de Clan Rover Rock, publicada en 2016, que resalta la fuerza de la hermandad, el compromiso y la alegría de crecer dentro del roversimo. La letra destaca el valor de la lealtad, el servicio y los momentos compartidos, celebrando el camino recorrido y la determinación de seguir avanzando juntos. Es un tema que reafirma el espíritu rover y la convicción de acompañarse durante muchos años más."
+  },
+  {
+    "id": 4,
+    "title": "No es Solo ser rover ",
+    "artist": "Nudo",
+    "category": "Rovers",
+    "duration": 195,
+    "coverUrl": "4",
+    "audioUrl": "audio/no-solo-es-ser-rover-nudo.mp3",
+    "description": "La canción “No Sólo es Ser Rover” habla sobre el esfuerzo, la constancia y el compromiso necesarios para superar los retos del camino rover. Sus letras resaltan valores como la fe, la fraternidad, el apoyo entre hermanos y la determinación para avanzar incluso en los momentos difíciles. Fue publicada en 2019 por el canal NUDO, convirtiéndose en una de sus piezas representativas dentro del ámbito scout."
+  },
+  {
+    "id": 5,
+    "title": "Canción para una Leyenda",
+    "artist": "Canción de Marcha",
+    "category": "Rovers",
+    "duration": 165,
+    "coverUrl": "5",
+    "audioUrl": "audio/cancion-para-una-leyenda.mp3",
+    "description": "Canción para una Leyenda es una pieza emblemática dentro del escultismo, que narra el viaje espiritual, físico y simbólico de un joven escudero que, a través de la naturaleza, la soledad y el esfuerzo, se transforma en un verdadero rover. La letra recorre etapas de crecimiento, dudas, silencio, sacrificio y revelación, reflejando el camino hacia la madurez, el servicio y la identidad scout. Esta versión, publicada por la cuenta oficial de Scouts de México en 2017, captura la esencia del roversimo: la búsqueda interior, el encuentro con uno mismo y el espíritu de servicio que marca a cada nueva generación."
+  },
+  {
+    "id": 6,
+    "title": "Simso Roversimo",
+    "artist": " J. Alejandro Aguilar",
+    "category": "Rovers",
+    "duration": 225,
+    "coverUrl": "6",
+    "audioUrl": "audio/sismo-roverismo.mp3",
+    "description": "Sismo Roverismo es una canción que refleja la energía, el servicio y la fuerza del movimiento Rover, mostrando cómo los jóvenes transforman su comunidad cuando trabajan juntos; compuesta por J. Alejandro Aguilar para el Moot Venezuela 2018."
+  },
+  {
+    "id": 7,
+    "title": "Cantares",
+    "artist": " J. Alejandro Aguilar",
+    "category": "Comunidad",
+    "duration": 225,
+    "coverUrl": "6",
+    "audioUrl": "audio/sismo-roverismo.mp3",
+    "description": "Cantares es la adaptación musical que Joan Manuel Serrat hizo de algunos versos del poema Proverbios y Cantares de Antonio Machado, añadiendo estrofas propias como homenaje al poeta, quien murió en el exilio en 1939. En el escultismo, especialmente en la Rama de Comunidad, esta canción simboliza el proceso de encontrar tu propio rumbo: no existe un camino trazado, sino uno que se crea paso a paso. Cantares refleja ese momento de transición en el que, como caminante, construyes tu propio sendero hacia la vida adulta."
+  }
+  
+]
