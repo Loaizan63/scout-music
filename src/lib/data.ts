@@ -1,4 +1,5 @@
 import pool from '@/lib/db';
+import { findSongByPublicSlug } from '@/utils/songSlug';
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
 
 export interface Song {
@@ -58,6 +59,18 @@ export async function fetchSongs(filters?: {
 }
 
 // Fetch a single song by ID (including its lyrics)
+export async function fetchSongByPublicSlug(slug: string): Promise<Song | null> {
+  try {
+    const songs = await fetchSongs();
+    const matched = findSongByPublicSlug(slug, songs);
+    if (!matched) return null;
+    return fetchSongById(matched.id);
+  } catch (error) {
+    console.error('Error fetching song by slug:', error);
+    return null;
+  }
+}
+
 export async function fetchSongById(id: string): Promise<Song | null> {
   try {
     const [rows] = await pool.query<RowDataPacket[]>('SELECT * FROM songs WHERE id = ?', [id]);
