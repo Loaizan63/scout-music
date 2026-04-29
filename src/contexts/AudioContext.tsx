@@ -41,8 +41,10 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
   const currentSong = songs[currentSongIndex] || null;
 
   useEffect(() => {
+    if (!currentSong) return;
+
+    // Single fetch for both lyrics and chords
     const loadData = async () => {
-      if (!currentSong) return;
       const [lyrics, chords] = await Promise.all([
         loadLyrics(currentSong.id),
         loadChords(currentSong.id),
@@ -52,25 +54,21 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     };
     loadData();
 
-    if (!currentSong) return;
-
-    // Extract dominant color
-    const fac = new FastAverageColor();
+    // Extract dominant color — skip for external URLs to avoid CORS issues
     const coverObj = getCoverImage(currentSong.coverUrl);
     const imageUrl = typeof coverObj === 'string' ? coverObj : coverObj.src;
+    const isExternal = imageUrl.startsWith('http');
 
-    fac.getColorAsync(imageUrl)
-      .then(color => {
-        setDominantColor(color.rgba);
-      })
-      .catch(e => {
-        console.warn('Could not extract color:', e);
-        setDominantColor("rgba(0,0,0,0.5)");
-      });
-
-    return () => {
-      fac.destroy();
-    };
+    if (!isExternal) {
+      const fac = new FastAverageColor();
+      fac.getColorAsync(imageUrl)
+        .then(color => setDominantColor(color.rgba))
+        .catch(() => setDominantColor('rgba(0,0,0,0.5)'));
+      return () => fac.destroy();
+    } else {
+      // For external images, derive a neutral dark color without CORS fetch
+      setDominantColor('rgba(20,20,30,0.85)');
+    }
   }, [currentSong?.id]);
 
   useEffect(() => {

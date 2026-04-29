@@ -6,7 +6,7 @@ import { Providers } from "@/components/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Campfire Tunes",
+  title: "Scout Music",
   description: "Tu reproductor de música para fogatas y campamentos",
 };
 

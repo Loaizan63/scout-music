@@ -6,8 +6,8 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+  connectionLimit: 3,   // Low for small VPS — raise if you see queue errors
+  queueLimit: 10,
   ssl: {
     rejectUnauthorized: false,
   },

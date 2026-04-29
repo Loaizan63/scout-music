@@ -2,7 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { fetchSongById, fetchSongs } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import SongDetailView from "@/components/SongDetailView";
-import { getCoverImage } from '@/utils/getCoverImage';
+import { resolveMediaUrl } from '@/utils/resolveMediaUrl';
 
 type Props = {
   params: Promise<{ id: string }>
@@ -23,13 +23,20 @@ export async function generateMetadata(
 
   const title = `${song.title} - ${song.artist} | Campfire Tunes`;
   const description = song.description || `Escucha "${song.title}" de ${song.artist} en Campfire Tunes, tu reproductor de música scout.`;
-  
-  // Try to get a valid image URL for Open Graph
+
+  // Build an absolute OG image URL — WhatsApp/Facebook need a full https:// URL
   let imageUrl = '';
-  try {
-    const cover = getCoverImage(song.coverUrl);
-    imageUrl = typeof cover === 'string' ? cover : cover.src;
-  } catch (e) {}
+  const rawCover = song.coverUrl ?? '';
+  const resolved = resolveMediaUrl(rawCover);
+  if (resolved) {
+    if (resolved.startsWith('http')) {
+      imageUrl = resolved;
+    } else {
+      // Relative path — make it absolute using the configured app URL
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? '';
+      imageUrl = appUrl ? `${appUrl.replace(/\/$/, '')}${resolved}` : '';
+    }
+  }
 
   return {
     title,
@@ -38,7 +45,7 @@ export async function generateMetadata(
       title,
       description,
       type: 'music.song',
-      ...(imageUrl ? { images: [{ url: imageUrl }] } : {})
+      ...(imageUrl ? { images: [{ url: imageUrl, width: 800, height: 800 }] } : {})
     },
     twitter: {
       card: 'summary_large_image',
