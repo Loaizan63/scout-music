@@ -34,6 +34,8 @@ interface PlayerProps {
   onVolumeChange: (value: number[]) => void;
   onShowChords?: () => void;
   dominantColor: string;
+  /** Slug público (/song/[slug]); si falta usa id solo como último recurso */
+  songShareSlug?: string | null;
 }
 
 const formatTime = (seconds: number) => {
@@ -54,6 +56,7 @@ export const Player = ({
   onVolumeChange,
   onShowChords,
   dominantColor,
+  songShareSlug,
 }: PlayerProps) => {
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -155,7 +158,8 @@ export const Player = ({
   }
 
   const handleShare = async () => {
-    const shareUrl = `${window.location.origin}/song/${currentSong.id}`;
+    const pathSeg = songShareSlug ?? currentSong.id;
+    const shareUrl = `${window.location.origin}/song/${encodeURIComponent(pathSeg)}`;
     const shareData = {
       title: currentSong.title,
       text: `Escucha "${currentSong.title}" de ${currentSong.artist}`,

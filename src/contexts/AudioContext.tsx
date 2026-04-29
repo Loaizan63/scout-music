@@ -8,6 +8,7 @@ import { ChordsDialog } from '@/components/ChordsDialog';
 import { FastAverageColor } from 'fast-average-color';
 import { getCoverImage } from '@/utils/getCoverImage';
 import { resolveMediaUrl } from '@/utils/resolveMediaUrl';
+import { publicSlugForSong } from '@/utils/songSlug';
 
 interface AudioContextType {
   songs: Song[];
@@ -108,15 +109,20 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [isPlaying]);
 
-  // Sync URL when song changes and is playing
+  // Sync URL when song changes and is playing (slug legible, no UUID)
   useEffect(() => {
-    if (currentSong && isPlaying) {
-      const newUrl = `/song/${currentSong.id}`;
-      if (window.location.pathname !== newUrl) {
+    if (currentSong && isPlaying && songs.length > 0) {
+      const slug = publicSlugForSong(currentSong, songs);
+      const newUrl = `/song/${encodeURIComponent(slug)}`;
+      const decodeSeg = () => {
+        const m = /^\/song\/(.+)$/.exec(window.location.pathname);
+        return m ? decodeURIComponent(m[1]) : null;
+      };
+      if (decodeSeg() !== slug) {
         window.history.pushState(null, '', newUrl);
       }
     }
-  }, [currentSong?.id, isPlaying]);
+  }, [currentSong?.id, isPlaying, songs]);
 
   const playSong = (index: number) => {
     if (currentSongIndex === index) {
@@ -181,6 +187,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       
       <Player
         currentSong={currentSong ? { ...currentSong, lyrics: currentLyrics, chords: currentChords } : null}
+        songShareSlug={currentSong ? publicSlugForSong(currentSong, songs) : null}
         isPlaying={isPlaying}
         progress={currentTime}
         duration={duration}

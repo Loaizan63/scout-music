@@ -9,6 +9,7 @@ import { getCoverImage } from "@/utils/getCoverImage";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
+import { publicSlugForSong } from "@/utils/songSlug";
 
 interface SongDetailViewProps {
   initialSong: Song;
@@ -36,9 +37,8 @@ export default function SongDetailView({ initialSong, allSongs, onBack }: SongDe
   };
 
   const handleShare = async () => {
-    // If we are sharing from the global app, the URL might not be /song/[id] yet,
-    // so we construct the direct link to the song.
-    const shareUrl = `${window.location.origin}/song/${initialSong.id}`;
+    const slug = publicSlugForSong(initialSong, allSongs);
+    const shareUrl = `${window.location.origin}/song/${encodeURIComponent(slug)}`;
     const shareData = {
       title: initialSong.title,
       text: `Escucha "${initialSong.title}" de ${initialSong.artist}`,
