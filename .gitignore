@@ -3,7 +3,8 @@ node_modules/
 .env
 .env.local
 .env*.local
-
+.env.production
+.env.staging
 # Caché de Turbopack (puede llegar a cientos de MB)
 .sst/
 **/.turbo/

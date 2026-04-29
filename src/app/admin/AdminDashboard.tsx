@@ -115,7 +115,7 @@ export default function AdminDashboard() {
               <Disc3 className="w-4 h-4 text-accent" />
             </div>
             <div>
-              <h1 className="font-bold text-sm leading-none">Campfire Tunes</h1>
+              <h1 className="font-bold text-sm leading-none">Scout Music</h1>
               <p className="text-[10px] text-white/40 leading-none mt-0.5">Panel de Administración</p>
             </div>
           </div>

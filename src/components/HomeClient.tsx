@@ -17,7 +17,7 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ initialSongs, initialCategories }: HomeClientProps) {
-  const { songs, setSongs, playSong, currentSongIndex, isPlaying, dominantColor } = useAudio();
+  const { songs, setSongs, playSong, currentSongIndex, isPlaying } = useAudio();
   
   const [selectedAlbum, setSelectedAlbum] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,6 +56,13 @@ export default function HomeClient({ initialSongs, initialCategories }: HomeClie
     playSong(globalIndex);
   };
 
+  const formatDuration = (seconds: number) => {
+    if (!Number.isFinite(seconds) || seconds <= 0) return "--:--";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${mins}:${secs}`;
+  };
+
   // View: Song Detail Fullscreen
   if (selectedSongDetail) {
     return (
@@ -76,12 +83,10 @@ export default function HomeClient({ initialSongs, initialCategories }: HomeClie
     const isAlbumPlaying = isPlaying && albumSongs.some(s => displaySongs.findIndex(ds => ds.id === s.id) === currentSongIndex);
 
     return (
-      <div className="min-h-screen flex flex-col bg-background pb-32 animate-fade-in relative">
+      <div className="min-h-screen flex flex-col bg-background pb-32 animate-fade-in relative overflow-hidden">
         {/* Dynamic Gradient Background for Album Detail */}
-        <div 
-          className="absolute inset-0 h-96 opacity-30 pointer-events-none transition-colors duration-1000"
-          style={{ background: `linear-gradient(to bottom, ${dominantColor}, transparent)` }}
-        />
+        <div className="absolute inset-0 h-96 opacity-55 pointer-events-none transition-colors duration-1000 bg-[linear-gradient(180deg,rgba(128,59,255,0.42),rgba(34,197,94,0.22),transparent)]" />
+        <div className="absolute inset-x-0 top-0 h-[28rem] pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(55,255,170,0.16),transparent_28%),radial-gradient(circle_at_top_left,rgba(155,81,224,0.18),transparent_30%)]" />
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 w-full pt-6 relative z-10">
           <Button 
@@ -94,8 +99,8 @@ export default function HomeClient({ initialSongs, initialCategories }: HomeClie
           </Button>
 
           {/* Album Header */}
-          <div className="flex flex-col md:flex-row items-end md:items-end gap-6 md:gap-10 mb-10 pb-8 border-b border-white/10">
-            <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-xl overflow-hidden shadow-2xl flex-shrink-0">
+          <div className="flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-10 mb-10 pb-8 border-b border-white/10">
+            <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-xl overflow-hidden shadow-2xl flex-shrink-0 self-center md:self-auto">
               <Image
                 src={getCoverImage(coverUrl)}
                 alt={selectedAlbum}
@@ -105,29 +110,30 @@ export default function HomeClient({ initialSongs, initialCategories }: HomeClie
                 priority
               />
             </div>
-            <div className="flex-1 space-y-3">
+            <div className="flex-1 space-y-3 text-center md:text-left">
               <p className="text-sm font-bold tracking-widest uppercase text-white/70">Álbum</p>
               <h1 className="text-4xl md:text-6xl font-extrabold text-foreground tracking-tight">
                 {selectedAlbum}
               </h1>
-              <p className="text-muted-foreground font-medium flex items-center gap-2">
-                Campfire Tunes <span className="w-1 h-1 rounded-full bg-white/30" /> {albumSongs.length} canciones
-              </p>
+              <div className="flex items-center justify-center md:justify-start gap-4 mt-1">
+                <p className="text-muted-foreground font-medium flex items-center gap-2">
+                  Scout Music <span className="w-1 h-1 rounded-full bg-white/30" /> {albumSongs.length} canciones
+                </p>
+                <div className="">
+                  <button
+                    onClick={() => isAlbumPlaying ? playSong(currentSongIndex) : handlePlayAlbum(albumSongs)}
+                    aria-label="Reproducir álbum"
+                    className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full bg-accent text-accent-foreground shadow-[0_0_20px_hsl(var(--accent)/0.4)] hover:scale-105 active:scale-95 transition-all"
+                  >
+                    {isAlbumPlaying ? (
+                      <Pause className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" />
+                    ) : (
+                      <Play className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-
-          {/* Play Button for Album */}
-          <div className="mb-8 flex items-center gap-6">
-            <button
-              onClick={() => isAlbumPlaying ? playSong(currentSongIndex) : handlePlayAlbum(albumSongs)}
-              className="w-16 h-16 flex items-center justify-center rounded-full bg-accent text-accent-foreground shadow-[0_0_20px_hsl(var(--accent)/0.4)] hover:scale-105 active:scale-95 transition-all"
-            >
-              {isAlbumPlaying ? (
-                <Pause className="w-7 h-7" fill="currentColor" />
-              ) : (
-                <Play className="w-7 h-7 ml-1" fill="currentColor" />
-              )}
-            </button>
           </div>
 
           {/* Tracklist Table */}
@@ -147,9 +153,6 @@ export default function HomeClient({ initialSongs, initialCategories }: HomeClie
               const isThisSongPlaying = isPlaying && currentSongIndex === globalIndex;
               const isCurrentSong = currentSongIndex === globalIndex;
               
-              const mins = Math.floor((song.duration || 0) / 60);
-              const secs = Math.floor((song.duration || 0) % 60).toString().padStart(2, "0");
-
               return (
                 <div 
                   key={song.id}
@@ -197,7 +200,7 @@ export default function HomeClient({ initialSongs, initialCategories }: HomeClie
 
                   {/* Duration */}
                   <div className="hidden md:block text-muted-foreground text-sm">
-                    {song.duration ? `${mins}:${secs}` : "--:--"}
+                    {formatDuration(song.duration)}
                   </div>
 
                   {/* Review / description button */}
@@ -230,12 +233,9 @@ export default function HomeClient({ initialSongs, initialCategories }: HomeClie
 
   // View: Albums Grid or Search Results
   return (
-    <div className="min-h-screen flex flex-col bg-background pb-32 relative">
+      <div className="min-h-screen flex flex-col bg-background pb-32 relative overflow-hidden">
       {/* Background Gradient for Main View */}
-      <div 
-        className="fixed top-0 left-0 right-0 h-96 opacity-20 pointer-events-none transition-colors duration-1000 z-0"
-        style={{ background: `radial-gradient(ellipse at top, ${dominantColor}, transparent)` }}
-      />
+        <div className="fixed top-0 left-0 right-0 h-[32rem] opacity-70 pointer-events-none transition-colors duration-1000 z-0 bg-[radial-gradient(ellipse_at_top,rgba(147,51,234,0.42),transparent_44%),radial-gradient(ellipse_at_top_right,rgba(34,197,94,0.18),transparent_34%),radial-gradient(ellipse_at_top_left,rgba(147,51,234,0.24),transparent_58%)]" />
       
       <main className="flex-1 overflow-y-auto relative z-10 pt-8 md:pt-16 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto w-full">
         {/* Header Section */}

@@ -23,14 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!song) {
     return {
-      title: 'Canción no encontrada | Campfire Tunes',
+      title: 'Canción no encontrada | Scout Music',
     };
   }
 
-  const title = `${song.title} - ${song.artist} | Campfire Tunes`;
+  const title = `${song.title} - ${song.artist} | Scout Music`;
   const description =
     song.description ||
-    `Escucha "${song.title}" de ${song.artist} en Campfire Tunes, tu reproductor de música scout.`;
+    `Escucha "${song.title}" de ${song.artist} en Scout Music, tu reproductor de música scout.`;
 
   let imageUrl = '';
   const rawCover = song.coverUrl ?? '';
@@ -40,7 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       imageUrl = resolved;
     } else {
       const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? '';
-      imageUrl = appUrl ? `${appUrl.replace(/\/$/, '')}${resolved}` : '';
+      // Prefer absolute URL when configured, otherwise keep relative path so platforms can resolve it
+      imageUrl = appUrl ? `${appUrl.replace(/\/$/, '')}${resolved}` : resolved;
     }
   }
 

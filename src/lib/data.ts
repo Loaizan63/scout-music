@@ -51,7 +51,13 @@ export async function fetchSongs(filters?: {
     }
 
     const [rows] = await pool.query<RowDataPacket[]>(query, params);
-    return (rows as Song[]).map(s => ({ ...s, duration: Number(s.duration) ?? 0 }));
+    return (rows as Song[]).map((song) => {
+      const parsedDuration = Number(song.duration);
+      return {
+        ...song,
+        duration: Number.isFinite(parsedDuration) && parsedDuration > 0 ? parsedDuration : 0,
+      };
+    });
   } catch (error) {
     console.error('Error fetching songs from DB:', error);
     return [];

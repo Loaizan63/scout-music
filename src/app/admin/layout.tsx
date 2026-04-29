@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Admin - Campfire Tunes',
+  title: 'Admin - Scout Music',
   description: 'Panel de Administración de canciones',
 };
 

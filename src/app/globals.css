@@ -8,43 +8,43 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Premium True Black Theme */
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    /* Purple base with green energy accents */
+    --background: 263 40% 6%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+    --card: 262 35% 10%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 262 35% 9%;
+    --popover-foreground: 0 0% 98%;
 
-    /* Sleek Primary - White/Silver */
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    /* Primary - Electric green */
+    --primary: 147 72% 52%;
+    --primary-foreground: 263 40% 6%;
 
-    /* Secondary - Dark Gray */
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Deep plum */
+    --secondary: 262 28% 16%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 262 24% 16%;
+    --muted-foreground: 270 10% 72%;
 
-    /* Accent - Vibrant White or dynamic */
-    --accent: 0 0% 100%;
-    --accent-foreground: 0 0% 0%;
+    /* Accent - Soft violet */
+    --accent: 272 74% 66%;
+    --accent-foreground: 263 40% 6%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 100%;
+    --border: 262 22% 18%;
+    --input: 262 22% 18%;
+    --ring: 147 72% 52%;
 
     --radius: 1rem;
     
     /* Shadows */
-    --shadow-glow: 0 0 30px rgba(255, 255, 255, 0.1);
-    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 30px rgba(96, 255, 170, 0.18);
+    --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.45);
     
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,6 +59,10 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-sans;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background:
+      radial-gradient(circle at top left, hsla(272, 75%, 62%, 0.22), transparent 34%),
+      radial-gradient(circle at top right, hsla(147, 72%, 52%, 0.14), transparent 30%),
+      linear-gradient(180deg, hsl(var(--background)), hsl(260 38% 4%));
   }
 }
 
@@ -118,7 +122,7 @@ All colors MUST be HSL.
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 0.5);
+    background: hsl(var(--accent) / 0.5);
     border-radius: 4px;
     transition: background 0.3s ease;
   }
@@ -135,9 +139,9 @@ All colors MUST be HSL.
 
   /* Glass Morphism Effect */
   .glass-effect {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.06);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(185, 255, 212, 0.1);
   }
 }

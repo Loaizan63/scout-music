@@ -89,7 +89,7 @@ export default function SongDetailView({ initialSong, allSongs, onBack }: SongDe
         )}
         
         <span className="text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-white/50">
-          Campfire Tunes
+          Scout Music
         </span>
         <Button onClick={handleShare} variant="ghost" size="icon" className="hover-lift rounded-full bg-black/20 backdrop-blur-md border border-white/10 hover:bg-black/40">
           <Share2 className="w-5 h-5 text-white" />

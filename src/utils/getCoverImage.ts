@@ -25,6 +25,16 @@ export const getCoverImage = (coverUrl: string | null | undefined): string | Sta
     return coverUrl;
   }
 
+  // Numeric legacy id -> map to assets/song-{id}-cover.jpg
+  if (/^\d+$/.test(coverUrl)) {
+    return `/assets/song-${coverUrl}-cover.jpg`;
+  }
+
+  // If the string already looks like a song-... or upload_... filename, assume it's in /assets
+  if (/^(song-|upload_)/.test(coverUrl)) {
+    return `/assets/${coverUrl}`;
+  }
+
   // Legacy short key (fogata / marcha / ceremonia)
   if (COVER_KEYS[coverUrl]) {
     return COVER_KEYS[coverUrl];
