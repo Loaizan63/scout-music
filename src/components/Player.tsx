@@ -235,7 +235,7 @@ export const Player = ({
                   className={`object-cover transition-all duration-500 ${
                     isPlaying ? "scale-110" : "scale-105"
                   }`}
-                  priority
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
                 <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6">

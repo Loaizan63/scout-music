@@ -107,7 +107,7 @@ export default function SongDetailView({ initialSong, allSongs, onBack }: SongDe
               alt={initialSong.title}
               fill
               className="object-cover"
-              priority
+              loading="eager"
               sizes="(max-width: 768px) 256px, 320px"
             />
           </div>

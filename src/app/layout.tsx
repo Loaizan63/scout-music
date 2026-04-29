@@ -8,6 +8,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Scout Music",
   description: "Tu reproductor de música para fogatas y campamentos",
+  openGraph: {
+    title: "Scout Music",
+    description: "Tu reproductor de música para fogatas y campamentos",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
