@@ -1,27 +1,32 @@
 # Dependencias
 node_modules
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.npm
+.yarn
 
-# Build output
+# Build y Cache (Los culpables del peso)
 .next
 out
+.cache
+*.sst
+*.tsbuildinfo
 
-# Environment secrets — NEVER commit these
+# Logs
+*-debug.log*
+*-error.log*
+
+# Git y Configuración local
+.git
+.gitignore
+.vscode
+.idea
+.DS_Store
+
+# Secretos
 .env
 .env.local
 .env.production
 .env*.local
 
-# Dev tools
-.git
-.gitignore
+# Documentación (Docker no la necesita para correr la app)
 README.md
 *.md
-
-# OS / Editor
-.DS_Store
-*.pem
-.vscode
-.idea
